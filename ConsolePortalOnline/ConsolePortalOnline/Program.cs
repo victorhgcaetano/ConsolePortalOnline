@@ -44,7 +44,7 @@ namespace ConsolePortalOnline
 
                             EntityReference nivelCliente = (EntityReference)((AliasedValue)opportunityCRM["conta.g07_niveldocliente"]).Value;                                                      
 
-                            EntityCollection accountsCRM = opportunity.RetrieveNivelClienteByAccount(new Guid(parentAccountId.Id.ToString()));
+                            EntityCollection accountsCRM = opportunity.RetrieveNivelClienteByOpportunityAccount(new Guid(parentAccountId.Id.ToString()));
 
                             foreach (Entity accountCRM in accountsCRM.Entities)
                             {                                

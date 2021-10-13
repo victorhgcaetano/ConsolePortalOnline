@@ -31,19 +31,12 @@ namespace ConsolePortalOnline.Model
             return this.Service.RetrieveMultiple(queryOpportunitys);
         }
 
-        public void UpdateOpportunity(Guid opportunityId, decimal valorDesconto)
-        {
-            Entity opportunity = new Entity(this.TableName);
-            opportunity.Id = opportunityId;  //new Guid(opportunityId.ToString());
-            opportunity["discountamount"] = new Money(valorDesconto);            
-            this.Service.Update(opportunity);
-        }
 
-        public EntityCollection RetrieveNivelClienteByAccount(Guid accountId)
+        public EntityCollection RetrieveNivelClienteByOpportunityAccount(Guid opportunityAccountId)
         {
             QueryExpression queryAccounts = new QueryExpression("account");
             queryAccounts.ColumnSet.AddColumns("g07_niveldocliente");
-            queryAccounts.Criteria.AddCondition("accountid", ConditionOperator.Equal, accountId);
+            queryAccounts.Criteria.AddCondition("accountid", ConditionOperator.Equal, opportunityAccountId);
 
             queryAccounts.AddLink("g07_niveldocliente", "g07_niveldocliente", "g07_niveldoclienteid", JoinOperator.Inner);
             queryAccounts.LinkEntities[0].Columns.AddColumns("g07_porcentagemdedesconto", "g07_valordedesconto");
@@ -52,5 +45,12 @@ namespace ConsolePortalOnline.Model
             return this.Service.RetrieveMultiple(queryAccounts);
         }
 
+        public void UpdateOpportunity(Guid opportunityId, decimal valorDesconto)
+        {
+            Entity opportunity = new Entity(this.TableName);
+            opportunity.Id = opportunityId;
+            opportunity["discountamount"] = new Money(valorDesconto);
+            this.Service.Update(opportunity);
+        }
     }
 }
